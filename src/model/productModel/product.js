@@ -18,6 +18,11 @@ const WOOD = new mongoose.Schema(
       trim: true,
       require: true,
     },
+    part: {
+      type: String,
+      trim: true,
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -39,6 +44,11 @@ const CNC_T = new mongoose.Schema(
     },
     entiti: {
       type: Number,
+      trim: true,
+      require: true,
+    },
+    part: {
+      type: String,
       trim: true,
       require: true,
     },
@@ -66,6 +76,11 @@ const CNC_R = new mongoose.Schema(
       trim: true,
       require: true,
     },
+    part: {
+      type: String,
+      trim: true,
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -90,6 +105,11 @@ const WOODCARVER = new mongoose.Schema(
       trim: true,
       require: true,
     },
+    part: {
+      type: String,
+      trim: true,
+      require: true,
+    },
   },
   {
     timestamps: true,
@@ -111,6 +131,11 @@ const ADHESIVE_WORK = new mongoose.Schema(
     },
     entiti: {
       type: Number,
+      trim: true,
+      require: true,
+    },
+    part: {
+      type: String,
       trim: true,
       require: true,
     },
@@ -231,24 +256,25 @@ const ProductSchema = new mongoose.Schema(
 
 ProductSchema.index({ slug: 1 }, { unique: true });
 
-ProductSchema.index({ name : 1 })
+ProductSchema.index({ name: 1 });
 
-ProductSchema.index({ createAt : -1 })
+ProductSchema.index({ createAt: -1 });
 
 ProductSchema.index(
-    {
-        name : "text",
-        description :"text"
+  {
+    name: "text",
+    description: "text",
+  },
+  {
+    weights: {
+      name: 10,
+      description: 3,
     },
-    {
-        weights : {
-            name : 10,
-            description : 3
-        },
-        default_language: "none",
-    }
-)
+    default_language: "none",
+  },
+);
 
-const ProductModel = mongoose.models.product || mongoose.model("product", ProductSchema);
+const ProductModel =
+  mongoose.models.product || mongoose.model("product", ProductSchema);
 
 export default ProductModel;
