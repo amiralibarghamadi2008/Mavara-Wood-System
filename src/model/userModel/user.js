@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum : ["ADMIN" , "WOOD" , "CNC" , "WOODCARVER" , "ADHESIVE_WORK" , "REVERSIBLE" , "STICKY_SHEET" , "USER"],
+      enum : ["ADMIN" , "WOOD" , "CNC_T" , "CNC_R" , "WOODCARVER" , "ADHESIVE_WORK" , "REVERSIBLE" , "STICKY_SHEET" , "USER"],
       default : "USER",
     },
   },
@@ -31,6 +31,24 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+UserSchema.index({ phoneNumber : 1 ,  fullName : 1 } , { unique : true })
+
+UserSchema.index({ createAt : 1 })
+
+UserSchema.index(
+    {
+        fullName : "text",
+        phoneNumber :"text"
+    },
+    {
+        weights : {
+            fullName : 10,
+            phoneNumber : 7
+        },
+        default_language: "none",
+    }
+)
 
 const UserModel = mongoose.models.user || mongoose.model("user" , UserSchema)
 
