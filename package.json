@@ -1,0 +1,20 @@
+{
+  "name": "mavara-wood-system",
+  "version": "1.0.0",
+  "description": "i can do anything with out ai",
+  "homepage": "https://github.com/amiralibarghamadi2008/Mavara-Wood-System#readme",
+  "bugs": {
+    "url": "https://github.com/amiralibarghamadi2008/Mavara-Wood-System/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amiralibarghamadi2008/Mavara-Wood-System.git"
+  },
+  "license": "MIT",
+  "author": "Amir ali Barghamadi",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "you have bug in your test step"
+  }
+}
