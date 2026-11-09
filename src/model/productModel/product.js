@@ -233,7 +233,7 @@ ProductSchema.index({ slug: 1 }, { unique: true });
 
 ProductSchema.index({ name : 1 })
 
-ProductSchema.index({ createAt : 1 })
+ProductSchema.index({ createAt : -1 })
 
 ProductSchema.index(
     {

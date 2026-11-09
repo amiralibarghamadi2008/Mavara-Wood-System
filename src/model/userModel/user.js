@@ -30,12 +30,20 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON : { virtuals : true },
+    toObject : { virtuals : true }
   },
 );
 
+UserSchema.virtual("tickets" , {
+    ref : "ticket",
+    localField : "_id",
+    foreignField : "user"
+})
+
 UserSchema.index({ phoneNumber : 1 ,  fullName : 1 } , { unique : true })
 
-UserSchema.index({ createAt : 1 })
+UserSchema.index({ createAt : -1 })
 
 UserSchema.index(
     {
