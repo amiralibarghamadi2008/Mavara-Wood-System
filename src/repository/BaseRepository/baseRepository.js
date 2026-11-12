@@ -6,9 +6,13 @@ export async function FindAll(model) {
   }
 }
 
-export async function FindOne(model, filter) {
+export async function FindOne(model, filter, options = {}) {
   try {
-    return await model.findById(filter);
+    let queryParams = model.findById(filter);
+    
+    if (options.sort) {
+      queryParams = queryParams.sort(options.sort);
+    }
   } catch (error) {
     throw error;
   }
