@@ -16,8 +16,8 @@ const TicketSchema = new mongoose.Schema(
     },
     status: {
       type : String,
-      enume : ["pending" , "answered"],
-      default : "pending",
+      enume : ["PENDING" , "ANSWERED"],
+      default : "PENDING",
     },
     user : {
       type : mongoose.Schema.Types.ObjectId,

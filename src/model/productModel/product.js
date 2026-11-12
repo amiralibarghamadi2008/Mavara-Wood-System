@@ -251,8 +251,16 @@ const ProductSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
 );
+
+ProductSchema.virtual("productCreators", {
+  ref: "creator",
+  localField: "_id",
+  foreignField: "product",
+});
 
 ProductSchema.index({ slug: 1 }, { unique: true });
 
