@@ -1,18 +1,37 @@
-import SendSMSWithPattern from "../../../utils/SmsPanel/ConnectToSmsPanel.js";
-import { SendOtpCode } from "../../../repository/OtpRepositroy/otpRepository.js";
-import crypto from "crypto";
+import SendSMSWithPattern from "../../../utils/ConnectToSmsPanel/ConnectToSmsPanel.js";
+import { SendOtpCode } from "../../../repository/OtpRepository/otpRepository.js";
+import redis from "../../../config/redis/redis.js";
+import crypto from "node:crypto";
 
-export default async function SendSmsServce(userData) {
+export default async function SendSmsService(userData) {
   try {
-    const { userPhoneNumber } = userData;
+    const { phoneNumber } = userData;
 
-    const generateCode = crypto.randomInt(100000 * 1000000).toString();
+    const cacheKey = `otp:${phoneNumber}`;
 
-    const resId = await SendSMSWithPattern(userPhoneNumber, generateCode);
+    const cachedOtpCode = await redis.get(cacheKey);
 
-    const otpModel = await SendOtpCode(userPhoneNumber, generateCode);
+    if (cachedOtpCode) {
+      throw new Error(
+        "کد تایید قبلاً برای شما ارسال شده است. لطفاً ۲ دقیقه دیگر مجدداً تلاش کنید.",
+      );
+    }
 
-    return { resId, otpModel };
+    const generatOtpCode = crypto.randomInt(10000, 100000).toString();
+
+    const resId = await SendSMSWithPattern(phoneNumber, generatOtpCode);
+
+    const Send = await SendOtpCode(phoneNumber, generatOtpCode);
+
+    console.log(Send);
+
+    if (Send) {
+      await redis.set(cacheKey, JSON.stringify(Send), {
+        EX: 120,
+      });
+    }
+
+    return { resId, Send };
   } catch (error) {
     throw error;
   }
