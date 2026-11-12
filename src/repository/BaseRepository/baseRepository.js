@@ -1,38 +1,38 @@
-export function FindAll(model) {
+export async function FindAll(model) {
   try {
-    return model.find({});
+    return await model.find({});
   } catch (error) {
     throw error;
   }
 }
 
-export function FindOne(model, filter) {
+export async function FindOne(model, filter) {
   try {
-    return model.findById(filter);
+    return await model.findById(filter);
   } catch (error) {
     throw error;
   }
 }
 
-export function Crerate(model, data) {
+export async function Create(model, data) {
   try {
-    return model.create(data);
+    return await model.create(data);
   } catch (error) {
     throw error;
   }
 }
 
-export function Delete(model, filter) {
+export async function Delete(model, filter) {
   try {
-    return model.findByIdAndDelete(filter);
+    return await model.findByIdAndDelete(filter);
   } catch (error) {
     throw error;
   }
 }
 
-export function Update(model, filter) {
+export async function Update(model, filter) {
   try {
-    return model.findByIdAndUpdate(
+    return await model.findByIdAndUpdate(
       filter,
       { $set: data },
       {
