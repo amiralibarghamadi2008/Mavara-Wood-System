@@ -12,7 +12,7 @@ export default async function AccessToken(res, userData) {
         Jti: crypto.randomUUID(),
       },
       process.env.ACCESS_TOKEN_SECRET_KEY,
-      {expiresIn : "10m"}
+      {expiresIn : "30m"}
     );
 
     return accessToken

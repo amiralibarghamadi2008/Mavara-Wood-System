@@ -12,7 +12,7 @@ export default async function RefreshToken(res, userData) {
         Jti: crypto.randomUUID(),
       },
       process.env.REFRESH_TOKEN_SECRET_KEY,
-      {expiresIn : "10m"}
+      {expiresIn : "30d"}
     );
 
     return refreshToken
