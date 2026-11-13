@@ -1,11 +1,11 @@
-import SendSMSWithPattern from "../../../utils/ConnectToSmsPanel/ConnectToSmsPanel.js";
-import { SendOtpCode } from "../../../repository/OtpRepository/otpRepository.js";
+import SendSMSWithPattern from "../../../utils/SmsPanel/ConnectToSmsPanel.js";
+import { SendOtpCode } from "../../../repository/OtpRepositroy/otpRepository.js";
 import redis from "../../../config/redis/redis.js";
 import crypto from "node:crypto";
 
 export default async function SendSmsService(userData) {
   try {
-    const { phoneNumber } = userData;
+    const phoneNumber = userData;
 
     const cacheKey = `otp:${phoneNumber}`;
 
@@ -23,15 +23,13 @@ export default async function SendSmsService(userData) {
 
     const Send = await SendOtpCode(phoneNumber, generatOtpCode);
 
-    console.log(Send);
-
     if (Send) {
       await redis.set(cacheKey, JSON.stringify(Send), {
         EX: 120,
       });
     }
 
-    return { resId, Send };
+    return { phoneNumber, Send, resId };
   } catch (error) {
     throw error;
   }

@@ -2,7 +2,10 @@ import redis from "../../../config/redis/redis.js";
 
 export default async function VerifyOtpCodeService(userData) {
   try {
-    const { phoneNumber, otpCode } = userData;
+    const phoneNumber = userData;
+
+    const otpCode = userData
+
     const cacheKey = `otp:${phoneNumber}`;
 
     const savedData = await redis.get(cacheKey);
@@ -19,7 +22,7 @@ export default async function VerifyOtpCodeService(userData) {
 
     await redis.del(cacheKey);
 
-    return { success: true, message: "کد با موفقیت تایید شد" };
+    return { phoneNumber , otpCode };
   } catch (error) {
     throw error;
   }
